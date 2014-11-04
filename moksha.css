@@ -1,0 +1,78 @@
+/* moksha.css */
+
+body {
+  background-color: #567; 
+  padding: 0;
+  margin: 0;
+  font-family: Verdana, Arial, Helvetica, sans-serif; }
+
+.anchor {
+  display: block;
+  clear: both; }
+
+#moksha {
+  text-align: center;
+  margin: 5px 0 0 5px;
+  padding: 0;
+  display: inline-block;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid black; 
+  background-color: #ccc; }
+
+#textbox { 
+  font-family: "Lucida Console", Courier, monospace;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */ 
+  resize: none;
+  width: 100%; }
+
+#inputs {
+  text-align: left;
+  width: 99%;
+  margin: auto; }
+
+#inputs td {
+  padding: 0;
+  width: 33%; }
+
+#input_buttons {
+  float: right; }
+
+#input_buttons td {
+  width: 25%;
+  text-align: center;
+  padding: 0 1px 0 1px; }
+
+#input_buttons td button {
+  width: 100%; }
+
+#statusbar {
+  width: 100%;
+  margin: auto;
+  margin-top: 5px; }
+
+#versionNum {
+  text-align: left;
+  width: 25%;
+  color: black; }
+
+#message {
+  text-align: right;
+  float: right; }
+
+#actions {
+  float: left; }
+
+#ui_settings {
+  float: right; }
+
+
+
+
+
+
+
+

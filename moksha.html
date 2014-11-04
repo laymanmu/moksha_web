@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict-dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Moksha beta</title>
+    <link href="moksha.css" rel="stylesheet" type="text/css" />
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="TextTracker.js" type="text/javascript"></script>
+    <script src="Database.js" type="text/javascript"></script>
+    <script src="moksha.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div id="moksha">
+
+      <div id="menu">
+
+        <table id="actions"><tr>
+          <td><button id="sort">Sort</button></td>
+          <td><button id="reverseSort">Reverse Sort</button></td>
+          <td><button id="blanks">Remove blanks</button></td>
+        </tr></table><!-- actions -->
+
+        <table id="ui_settings"><tr>
+          <td><button id="resetUI">Reset UI</button></td>
+          <td>
+            tabs:   <input id="tabs" type="checkbox" />
+            width:  <input id="workspace_width"  size="4" value="?" />
+            height: <input id="workspace_height" size="4" value="?" />
+          </td>
+        </tr></table><!-- ui_settings -->
+
+      </div><!-- menu -->
+
+      <textarea id="textbox" rows="20" cols="84" spellcheck="false"></textarea>
+
+      <table id="inputs">
+        <tr>
+          <td class="label">Regex:</td>
+          <td class="label">Replacement:</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><input id="regex" size="28" /></td>
+          <td><input id="replacement" size="28" /></td>
+          <td>
+            <table id="input_buttons">
+              <tr>
+                <td><button id="replaceButton">Replace</button></td>
+                <td><button id="createButton">Create</button></td>
+                <td><button id="previousButton">Previous</button></td>
+                <td><button id="nextButton">Next</button></td>
+              </tr>
+            </table><!-- input_buttons -->
+          </td>
+        </tr>
+      </table><!-- inputs -->
+
+      <table id="statusbar">
+        <tr>
+          <td id="versionNum">current version: 1 of 1</td>
+          <td id="message"></td>
+        </tr>
+      </table><!-- statusbar -->
+
+      <div id="log"></div>
+
+    </div><!-- moksha -->
+
+  </body>
+</html>
+
