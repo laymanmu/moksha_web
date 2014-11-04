@@ -16,4 +16,5 @@ Features:
 To use:
 * open "moksha.html" in a modern browser
 
+![screenshot-moksha beta - chromium](https://cloud.githubusercontent.com/assets/8508035/4907750/fbf717f6-6463-11e4-88be-0b7c871e3476.png)
 
