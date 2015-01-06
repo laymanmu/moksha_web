@@ -14,6 +14,9 @@ Features:
 * small and easy to use
 
 To use:
+* open moksha.html in a modern browser.
+
+To use as a google chrome extension app:
 * open the Google Chrome browser or Chromium.
 * type chrome://extensions into the address bar
 * select the developer mod check box in the upper right of the page
