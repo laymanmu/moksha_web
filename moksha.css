@@ -34,6 +34,12 @@ body {
   width: 99%;
   margin: auto; }
 
+#inputs #regex {
+  width: 95%; }
+  
+#inputs #replacement {
+  width: 95%; }
+
 #inputs td {
   padding: 0;
   width: 33%; }
