@@ -21,6 +21,7 @@ $(document).ready(function() {
   reverseSort = document.getElementById("reverseSort");
   blanks      = document.getElementById("blanks");
   tabs        = document.getElementById("tabs");
+  csv         = document.getElementById("csv");
 
   // save original settings:
   origSettings.width  = textbox.offsetWidth;
@@ -52,6 +53,13 @@ $(document).ready(function() {
     tt.createVersion(textbox.value);
     tt.reverseSort();
     textbox.value = tt.currentVersion();
+    setMessages();
+  };
+  
+  csv.onclick = function() {
+    tt.createVersion(textbox.value);
+    textbox.value = getText().split("\n").join(", ");
+    tt.createVersion(textbox.value);
     setMessages();
   };
 
