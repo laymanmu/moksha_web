@@ -22,6 +22,8 @@ $(document).ready(function() {
   blanks      = document.getElementById("blanks");
   tabs        = document.getElementById("tabs");
   csv         = document.getElementById("csv");
+  upcase      = document.getElementById("upcase");
+  downcase    = document.getElementById("downcase");
 
   // save original settings:
   origSettings.width  = textbox.offsetWidth;
@@ -60,6 +62,30 @@ $(document).ready(function() {
     tt.createVersion(textbox.value);
     textbox.value = getText().split("\n").join(", ");
     tt.createVersion(textbox.value);
+    setMessages();
+  };
+
+  upcase.onclick = function() {
+    tt.createVersion(textbox.value);
+    var selected = getSelected();
+    if (selected.length > 0) {
+      tt.replaceSelection(".*", selected.textbox.toUpperCase(), selected.start, selected.end);
+    } else {
+      tt.replace(".*", getText().toUpperCase());
+    }
+    textbox.value = tt.currentVersion();
+    setMessages();
+  };
+
+  downcase.onclick = function() {
+    tt.createVersion(textbox.value);
+    var selected = getSelected();
+    if (selected.length > 0) {
+      tt.replaceSelection(".*", selected.textbox.toLowerCase(), selected.start, selected.end);
+    } else {
+      tt.replace(".*", getText().toLowerCase());
+    }
+    textbox.value = tt.currentVersion();
     setMessages();
   };
 
