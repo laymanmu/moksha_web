@@ -1,174 +1,155 @@
 // moksha.js
 
-// custom classes:
-var tt = new TextTracker();
-var db = new Database();
+var tt      = new TextTracker();
+var db      = new Database();
+var textbox = document.getElementById("textbox");
 
-// input & output:
-var textbox, versionMsg, message;
+// save original settings:
+var origSettings = {
+  width:  document.getElementById("textbox").offsetWidth,
+  height: document.getElementById("textbox").offsetHeight,
+  tabs:   document.getElementById("tabs").checked,
+};
 
-// settings:
-var width, height, sort, reverseSort, blanks, tabs;
-var origSettings = {};
-
-$(document).ready(function() {
-  textbox     = document.getElementById("textbox");
-  versionMsg  = document.getElementById("versionNum");
-  message     = document.getElementById("message");
-  width       = document.getElementById("workspace_width");
-  height      = document.getElementById("workspace_height");
-  sort        = document.getElementById("sort");
-  reverseSort = document.getElementById("reverseSort");
-  blanks      = document.getElementById("blanks");
-  tabs        = document.getElementById("tabs");
-  csv         = document.getElementById("csv");
-  upcase      = document.getElementById("upcase");
-  downcase    = document.getElementById("downcase");
-
-  // save original settings:
-  origSettings.width  = textbox.offsetWidth;
-  origSettings.height = textbox.offsetHeight;
-  origSettings.tabs   = tabs.checked;
-
-  // update the UI from db settings:
-  db.open(function() {
-    db.read(resetUI);
-  });
-
-  // EVENTS:
-
-  blanks.onclick = function() {
-    tt.createVersion(textbox.value);
-    tt.removeBlankLines();
-    textbox.value = tt.currentVersion();
-    setMessages();
-  };
-
-  sort.onclick = function() {
-    tt.createVersion(textbox.value);
-    tt.sort();
-    textbox.value = tt.currentVersion();
-    setMessages();
-  };
-
-  reverseSort.onclick = function() {
-    tt.createVersion(textbox.value);
-    tt.reverseSort();
-    textbox.value = tt.currentVersion();
-    setMessages();
-  };
-  
-  csv.onclick = function() {
-    tt.createVersion(textbox.value);
-    textbox.value = getText().split("\n").join(", ");
-    tt.createVersion(textbox.value);
-    setMessages();
-  };
-
-  upcase.onclick = function() {
-    tt.createVersion(textbox.value);
-    var selected = getSelected();
-    if (selected.length > 0) {
-      tt.replaceSelection(".*", selected.textbox.toUpperCase(), selected.start, selected.end);
-    } else {
-      tt.replace(".*", getText().toUpperCase());
-    }
-    textbox.value = tt.currentVersion();
-    setMessages();
-  };
-
-  downcase.onclick = function() {
-    tt.createVersion(textbox.value);
-    var selected = getSelected();
-    if (selected.length > 0) {
-      tt.replaceSelection(".*", selected.textbox.toLowerCase(), selected.start, selected.end);
-    } else {
-      tt.replace(".*", getText().toLowerCase());
-    }
-    textbox.value = tt.currentVersion();
-    setMessages();
-  };
-
-  $("#resetUI").click(function() {
-    db.delete("width", setWidth);
-    db.delete("height", setHeight);
-    db.delete("tabs", setTabs);
-  });
-
-  $("#replaceButton").click(function() {
-    var pattern     = document.getElementById("regex").value;
-    var replacement = document.getElementById("replacement").value;
-    var selected    = getSelected();
-    if (textbox.value != tt.currentVersion()) {
-      tt.createVersion(textbox.value);
-    }
-    if (selected.length > 0) {
-      tt.replaceSelection(pattern, replacement, selected.start, selected.end);
-    } else {
-      tt.replace(pattern, replacement);
-    }
-    textbox.value = tt.currentVersion();
-    setMessages();
-  });
-
-  $("#createButton").click(function() {
-    tt.createVersion(getText());
-    setMessages();
-  });
-
-  $("#previousButton").click(function() {
-    tt.undo();
-    textbox.value = tt.currentVersion();
-    setMessages();
-  });
-
-  $("#nextButton").click(function() {
-    tt.redo();
-    textbox.value = tt.currentVersion();
-    setMessages();
-  });
-
-  $("#log").click(function() {
-    document.getElementById("log").innerHTML = "";
-  });
-
-  // tabs in text:
-  textbox.onkeydown = function(e) {
-    if ((e.keyCode==9 || e.wich==9) && tabs.checked) {
-      e.preventDefault();
-      var start = textbox.selectionStart;
-      var end   = textbox.selectionEnd;
-      var text  = textbox.value;
-      textbox.value        = text.substring(0,start) +"\t"+ text.substring(end);
-      textbox.selectionEnd = start+1;
-    }
-  }
-
-  // db events:
-
-  width.onchange = function() {
-    textbox.style.width = width.value +"px";
-    db.update("width", width.value);
-  };
-
-  height.onchange = function() {
-    textbox.style.height = height.value +"px";
-    db.update("height", height.value);
-  };
-
-  tabs.onchange = function() {
-    db.update("tabs", tabs.checked);
-  };
-
+// update the UI from db settings:
+db.open(function() {
+  db.read(resetUI);
 });
+
+// EVENTS:
+
+document.getElementById("blanks").onclick = function() {
+  tt.createVersion(textbox.value);
+  tt.removeBlankLines();
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("sort").onclick = function() {
+  tt.createVersion(textbox.value);
+  tt.sort();
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("reverseSort").onclick = function() {
+  tt.createVersion(textbox.value);
+  tt.reverseSort();
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("csv").onclick = function() {
+  tt.createVersion(textbox.value);
+  textbox.value = getText().split("\n").join(", ");
+  tt.createVersion(textbox.value);
+  setMessages();
+};
+
+document.getElementById("upcase").onclick = function() {
+  tt.createVersion(textbox.value);
+  var selected = getSelected();
+  if (selected.length > 0) {
+    tt.replaceSelection(".*", selected.textbox.toUpperCase(), selected.start, selected.end);
+  } else {
+    tt.replace(".*", getText().toUpperCase());
+  }
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("downcase").onclick = function() {
+  tt.createVersion(textbox.value);
+  var selected = getSelected();
+  if (selected.length > 0) {
+    tt.replaceSelection(".*", selected.textbox.toLowerCase(), selected.start, selected.end);
+  } else {
+    tt.replace(".*", getText().toLowerCase());
+  }
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("resetUI").onclick = function() {
+  db.delete("width", setWidth);
+  db.delete("height", setHeight);
+  db.delete("tabs", setTabs);
+};
+
+document.getElementById("replaceButton").onclick = function() {
+  var pattern     = document.getElementById("regex").value;
+  var replacement = document.getElementById("replacement").value;
+  var selected    = getSelected();
+  if (textbox.value != tt.currentVersion()) {
+    tt.createVersion(textbox.value);
+  }
+  if (selected.length > 0) {
+    tt.replaceSelection(pattern, replacement, selected.start, selected.end);
+  } else {
+    tt.replace(pattern, replacement);
+  }
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("createButton").onclick = function() {
+  tt.createVersion(getText());
+  setMessages();
+};
+
+document.getElementById("previousButton").onclick = function() {
+  tt.undo();
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("nextButton").onclick = function() {
+  tt.redo();
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
+document.getElementById("log").onclick = function() {
+  document.getElementById("log").innerHTML = "";
+};
+
+// tabs in text:
+textbox.onkeydown = function(e) {
+  if ((e.keyCode==9 || e.wich==9) && tabs.checked) {
+    e.preventDefault();
+    var start = textbox.selectionStart;
+    var end   = textbox.selectionEnd;
+    var text  = textbox.value;
+    textbox.value        = text.substring(0,start) +"\t"+ text.substring(end);
+    textbox.selectionEnd = start+1;
+  }
+}
+
+// db events:
+
+document.getElementById("workspace_width").onchange = function() {
+  textbox.style.width = this.value +"px";
+  db.update("width", this.value);
+};
+
+document.getElementById("workspace_height").onchange = function() {
+  textbox.style.height = this.value +"px";
+  db.update("height", this.value);
+};
+
+tabs.onchange = function() {
+  db.update("tabs", tabs.checked);
+};
 
 // HELPERS:
 
 function log(text) {
-  $("#log").append(text +"<br />");
+  document.getElementById("log").append(text +"<br />");
 }
 
 function setMessages() {
+  var versionMsg  = document.getElementById("versionNum");
+  var message     = document.getElementById("message");  
   if (tt.errorMsg != "") {
     message.removeAttribute("class");
     message.setAttribute("class", "red");
@@ -204,6 +185,7 @@ function resetUI(settings) {
 }
 
 function setWidth(settings) {
+  var width = document.getElementById("workspace_width");
   if (settings && settings.width) {
     width.value         = settings.width;
     textbox.style.width = settings.width +"px";
@@ -214,6 +196,7 @@ function setWidth(settings) {
 }
 
 function setHeight(settings) {
+  var height = document.getElementById("workspace_height");
   if (settings && settings.height) {
     height.value         = settings.height;
     textbox.style.height = settings.height +"px";
