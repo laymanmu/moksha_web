@@ -41,7 +41,7 @@ document.getElementById("reverseSort").onclick = function() {
 
 document.getElementById("csv").onclick = function() {
   tt.createVersion(textbox.value);
-  textbox.value = getText().split("\n").join(", ");
+  textbox.value = textbox.value.split("\n").join(", ");
   tt.createVersion(textbox.value);
   setMessages();
 };
@@ -52,7 +52,7 @@ document.getElementById("upcase").onclick = function() {
   if (selected.length > 0) {
     tt.replaceSelection(".*", selected.textbox.toUpperCase(), selected.start, selected.end);
   } else {
-    tt.replace(".*", getText().toUpperCase());
+    tt.replace(".*", textbox.value.toUpperCase());
   }
   textbox.value = tt.currentVersion();
   setMessages();
@@ -64,7 +64,7 @@ document.getElementById("downcase").onclick = function() {
   if (selected.length > 0) {
     tt.replaceSelection(".*", selected.textbox.toLowerCase(), selected.start, selected.end);
   } else {
-    tt.replace(".*", getText().toLowerCase());
+    tt.replace(".*", textbox.value.toLowerCase());
   }
   textbox.value = tt.currentVersion();
   setMessages();
@@ -93,7 +93,7 @@ document.getElementById("replaceButton").onclick = function() {
 };
 
 document.getElementById("createButton").onclick = function() {
-  tt.createVersion(getText());
+  tt.createVersion(textbox.value);
   setMessages();
 };
 
@@ -160,10 +160,6 @@ function setMessages() {
     message.innerHTML = tt.infoMsg;
   }
   versionMsg.innerHTML = "current version: "+ (tt.currentVersionNum+1) +" of "+ tt.versions.length;
-}
-
-function getText() {
-  return textbox.value;
 }
 
 function getSelected() {
