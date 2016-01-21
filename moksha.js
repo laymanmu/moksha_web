@@ -70,6 +70,27 @@ document.getElementById("downcase").onclick = function() {
   setMessages();
 };
 
+document.getElementById("trim").onclick = function() {
+  tt.createVersion(textbox.value);
+  var replacement = [];
+  var selected    = getSelected();
+  if (selected.length > 0) {
+    var lines = selected.textbox.split("\n");
+    for (var i=0; i<lines.length; i++) {
+      replacement.push(lines[i].trim());
+    }
+    tt.replaceSelection(".*", replacement.join("\n"), selected.start, selected.end);
+  } else {
+    var lines = textbox.value.split("\n");
+    for (var i=0; i<lines.length; i++) {
+      replacement.push(lines[i].trim());
+    }
+    tt.replace(".*", replacement.join("\n"));
+  }
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
 document.getElementById("resetUI").onclick = function() {
   db.delete("width", setWidth);
   db.delete("height", setHeight);
