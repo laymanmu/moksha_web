@@ -7,8 +7,9 @@
 //
 
 function Database() {
-  this.name = "mokshadb";
-  this.db   = null;
+  this.name      = "mokshadb";
+  this.db        = null;
+  this.supported = true;
 
   this.onerror = function(e) {
     console.log("MokshaDB error: "+ e.value);
@@ -17,6 +18,11 @@ function Database() {
   this.open = function(callback) {
     var self      = this;  //<- for use inside of nested event handlers
     var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    if (indexedDB == null) {
+      this.supported = false;
+      console.log("Your browser does not support the database features for saving settings.");
+      return;
+    }
     var version   = 1;
     var request   = indexedDB.open(this.name, version);
 
@@ -38,6 +44,7 @@ function Database() {
   // CRUD functions:
 
   this.create = function(key, value, callback) {
+    if (!this.supported) { return; }
     var trans   = this.db.transaction([this.name], "readwrite");
     var store   = trans.objectStore(this.name);
     var request = store.put({"key":key, "value":value});
@@ -48,6 +55,7 @@ function Database() {
   };
 
   this.read = function(callback) {
+    if (!this.supported) { return; }
     var trans   = this.db.transaction([this.name], "readwrite");
     var store   = trans.objectStore(this.name);
     var request = store.openCursor();
@@ -66,11 +74,13 @@ function Database() {
   };
 
   this.update = function(key, value, callback) {
+    if (!this.supported) { return; }
     this.delete(key);
     this.create(key, value, callback);
   };
 
   this.delete = function(key, callback) {
+    if (!this.supported) { return; }
     var trans   = this.db.transaction([this.name], "readwrite");
     var store   = trans.objectStore(this.name);
     var request = store.delete(key);
