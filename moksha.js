@@ -116,6 +116,17 @@ document.getElementById("uniq").onclick = function() {
   setMessages();
 };
 
+document.getElementById("count").onclick = function() {
+  var count = 0;
+  var selected = getSelected();
+  if (selected.length > 0) {
+    count = selected.textbox.split("\n").length;
+  } else {
+    count = textbox.value.split("\n").length;
+  }
+  showMessage("Count: "+ count); 
+};
+
 document.getElementById("resetUI").onclick = function() {
   db.delete("width", setWidth);
   db.delete("height", setHeight);
@@ -206,6 +217,11 @@ function setMessages() {
     message.innerHTML = tt.infoMsg;
   }
   versionMsg.innerHTML = "current version: "+ (tt.currentVersionNum+1) +" of "+ tt.versions.length;
+}
+
+function showMessage(text) {
+  var message = document.getElementById("message");  
+  message.innerHTML = text;
 }
 
 function getSelected() {
