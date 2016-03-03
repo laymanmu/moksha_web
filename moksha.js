@@ -91,6 +91,31 @@ document.getElementById("trim").onclick = function() {
   setMessages();
 };
 
+document.getElementById("uniq").onclick = function() {
+  tt.createVersion(textbox.value);
+  var uniq  = [];
+  var selected = getSelected();
+  if (selected.length > 0) {
+    var lines = selected.textbox.split("\n");
+    for (var i=0; i<lines.length; i++) {
+      if (uniq.indexOf(lines[i]) == -1) {
+        uniq.push(lines[i]);
+      }
+    }
+    tt.replaceSelection(".*", uniq.join("\n"), selected.start, selected.end);
+  } else {
+    var lines = textbox.value.split("\n");
+    for (var i=0; i<lines.length; i++) {
+      if (uniq.indexOf(lines[i]) == -1) {
+        uniq.push(lines[i]);
+      }
+    }
+    tt.replace(".*", uniq.join("\n"));
+  }
+  textbox.value = tt.currentVersion();
+  setMessages();
+};
+
 document.getElementById("resetUI").onclick = function() {
   db.delete("width", setWidth);
   db.delete("height", setHeight);
