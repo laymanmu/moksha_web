@@ -5,16 +5,29 @@ A text editor in a browser that supports automatic versioning, regular expressio
 
 It is intended for quick manipulations of text with no fear (just click "previous version" to backout a change).
 
+All of the features below can work on all of the text or on a selection of the text.
+
 Features:
+* easy regular expression replacements
 * sorting and reverse sorting
 * removal of blank lines
+* convert lines to CSV (comma separated values)
+* convert to uppercase
+* convert to lowercase
+* remove blank space on beggining & end of lines
+* convert to a unique list by removing duplicate lines (even if unsorted)
 * toggle tabs in text (or use tabs to switch between ui components)
 * customizable width and height
 * ui settings are automatically saved in your browser db so you only have to set them once
-* small and easy to use
+* can be compiled to a single file for easy sharing and installation
+
+![screenshot](https://cloud.githubusercontent.com/assets/14101417/13502620/873a3c78-e120-11e5-9de0-64ac55f7b9ee.png)
 
 To use:
 * open moksha.html in a modern browser.
+
+To compile to a single file (requires Ruby):
+* run:  `rake to_single_file`
 
 To use as a google chrome extension app:
 * open the Google Chrome browser or Chromium.
@@ -23,6 +36,4 @@ To use as a google chrome extension app:
 * select "load unpacked extension..."
 * navigate to the folder containing it
 * select the containing folder and click the open button
-
-![screenshot-moksha beta - chromium](https://cloud.githubusercontent.com/assets/8508035/4907750/fbf717f6-6463-11e4-88be-0b7c871e3476.png)
 
